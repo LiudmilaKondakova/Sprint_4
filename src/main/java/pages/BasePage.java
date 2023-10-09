@@ -26,7 +26,7 @@ public class BasePage {
 
     public HomePage setOrderNum(String orderNum) {
         this.orderNum = orderNum;
-        return null;
+        return (HomePage) this;
     }
 
     public String getOrderNum() {

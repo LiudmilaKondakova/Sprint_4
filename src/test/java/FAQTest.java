@@ -1,18 +1,16 @@
-package tests;
-
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.NoSuchElementException;
 import pages.HomePage;
+import tests.BaseTest;
 
 import java.util.Arrays;
 import java.util.logging.Logger;
 
 @RunWith(Parameterized.class)
-public class FAQTest extends BaseTest{
+public class FAQTest extends BaseTest {
     private static final Logger LOGGER = Logger.getLogger(FAQTest.class.getName());
     private final String question;
     private final String answer;

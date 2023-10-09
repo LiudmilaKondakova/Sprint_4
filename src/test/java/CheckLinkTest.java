@@ -1,10 +1,9 @@
-package tests;
-
 import org.junit.Assert;
 import org.junit.Test;
 import pages.HomePage;
+import tests.BaseTest;
 
-public class CheckLinkTest extends BaseTest{
+public class CheckLinkTest extends BaseTest {
     // переход на Дзен
     @Test
     public void testGoToYandex() {

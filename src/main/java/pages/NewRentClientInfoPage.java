@@ -8,7 +8,7 @@ public class NewRentClientInfoPage extends MainHeader{
     //заголовок
     private final By pageHeader = By.xpath(".//div[@class='Order_Header__BZXOb']");
     //кнопка далее
-    private final By btnNext = By.cssSelector(".Button_Button__ra12g.Button_Middle__1CSJM");
+    private final By btnNext = By.className(".Button_Button__ra12g Button_Middle__1CSJM");
     //имя
     private final By inputName = By.xpath(".//input[@placeholder='* Имя']");
     //Фамилия
@@ -26,7 +26,22 @@ public class NewRentClientInfoPage extends MainHeader{
     private final By inputSurnameErrorMessage = By.xpath(".//div[text()='Введите корректную фамилию']");
     private final By inputAddressErrorMessage = By.xpath(".//div[text()='Введите корректный адрес']");
     private final By inputPhoneNumberError = By.xpath(".//div[text()='Введите корректный номер']");
-    private String subwayStation;
+    private final By inputDeliveryTime = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
+    // срок аренды
+    private final By inputRentalPeriod = By.xpath(".//div[@class='Dropdown-placeholder']");
+    // передается в теле метода
+    private final By inputRentalPeriodMenu = By.xpath(".//div[(@class='Dropdown-option') and (text()='%s')]");
+
+    //Цвет самоката
+    private final By inputScooterColor = By.xpath(".//label[(text()='%s')]");
+
+    //Комментарий для курьера
+    private final By inputComment = By.xpath(".//input[@placeholder='Комментарий для курьера']");
+    //Кнопка назад
+//    private final By buttonBack = By.cssSelector(".Button_Button__ra12g.Button_Middle__1CSJM.Button_Inverted__3IF-i");
+    //Кнопка заказать
+    private final By buttonCreateOrder = By.xpath("//button[(@class='Button_Button__ra12g Button_Middle__1CSJM')" +
+            " and (text()='Заказать')]");
 
 
     public NewRentClientInfoPage(WebDriver driver) {
@@ -68,7 +83,7 @@ public class NewRentClientInfoPage extends MainHeader{
 
     //клик по полю ввода станции метро
     public NewRentClientInfoPage inputSubwayStationClick(String subwayStation) {
-        this.subwayStation = subwayStation;
+        WebTestUtils.scrollTo(driver, WebTestUtils.xPathFormatter(listSubwayStation, subwayStation));
         driver.findElement(inputSubwayStation).click();
         return this;
     }
@@ -80,13 +95,13 @@ public class NewRentClientInfoPage extends MainHeader{
     }
 
     //клик по кнопке далее
-    public NewRentParamPage buttonNextClick() {
+    public NewRentClientInfoPage buttonNextClick() {
         driver.findElement(btnNext).click();
-        return new NewRentParamPage(driver);
+        return new NewRentClientInfoPage(driver);
     }
 
     //метод заполняет все поля
-    public NewRentParamPage addCustomerInfo(String name, String surname, String address, String subwayStation, String phoneNumber) {
+    public NewRentClientInfoPage addCustomerInfo(String name, String surname, String address, String subwayStation, String phoneNumber) {
 
         return this.inputName(name)
                 .inputSurname(surname)
@@ -117,4 +132,45 @@ public class NewRentClientInfoPage extends MainHeader{
         return driver.findElement(inputPhoneNumberError).isDisplayed();
     }
 
+/*    public NewRentClientInfoPage inputDeliveryTimeClick() {
+        driver.findElement(inputDeliveryTime).click();
+        return this;
+    } */
+
+    public NewRentClientInfoPage inputDeliveryTime(String timeDelivery) {
+        driver.findElement(inputDeliveryTime).sendKeys(timeDelivery);
+        driver.findElement(pageHeader).click();
+        return this;
+    }
+
+    public NewRentClientInfoPage inputRentalPeriod(String rentPeriod) {
+        driver.findElement(inputRentalPeriod).click();
+        By targetElement = WebTestUtils.xPathFormatter(inputRentalPeriodMenu, rentPeriod);
+        WebTestUtils.waitElement(driver, targetElement);
+        driver.findElement(targetElement).click();
+        return this;
+    }
+
+    public NewRentClientInfoPage selectColor(String colorScooter) {
+        driver.findElement(WebTestUtils.xPathFormatter(inputScooterColor, colorScooter)).click();
+        return this;
+    }
+
+    public NewRentClientInfoPage inputComment(String comment) {
+        driver.findElement(inputComment).sendKeys(comment);
+        return this;
+    }
+
+    public NewRentClientInfoPage buttonConfirmNewRentClick() {
+        driver.findElement(buttonCreateOrder).click();
+        return new NewRentClientInfoPage(driver);
+    }
+
+    public BasePage addRentInfo(String timeDelivery, String rentPeriod, String colorScooter, String comment) {
+        inputDeliveryTime(timeDelivery);
+        inputRentalPeriod(rentPeriod);
+        selectColor(colorScooter);
+        inputComment(comment);
+        return buttonConfirmNewRentClick();
+    }
 }

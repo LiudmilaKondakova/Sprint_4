@@ -24,6 +24,7 @@ public class HomePage extends MainHeader{
 
     //Текст на главной странице
     private final By scooterHomePageWelcomeText = By.xpath(".//div[@class='Home_Header__iJKdX']");
+    private By inputName;
 
     public HomePage(WebDriver driver) {
 
@@ -36,6 +37,7 @@ public class HomePage extends MainHeader{
     }
 
     //клик по кнопке Заказать вверху страницы
+    @Override
     public NewRentClientInfoPage buttonRentHeaderClick() {
         WebTestUtils.scrollTo(driver, buttonRentHeader);
         driver.findElement(buttonRentHeader).click();

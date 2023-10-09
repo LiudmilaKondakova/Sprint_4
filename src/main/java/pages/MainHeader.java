@@ -4,14 +4,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import service.TestConfigurations;
+import tests.WebTestUtils;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
 
-public class MainHeader extends BasePage{
+public class MainHeader extends BasePage {
     // ссылка перехода на страницу Дзен
     private final By linkToYandex = By.className("Header_LogoYandex__3TSOI");
     //ссылка перехода на главную страницу Самоката
     private final By linkToScooterHomePage = By.cssSelector(".Header_LogoScooter__3lsAR");
+    private By buttonRentHeader = By.className("Button_Button__ra12g");;
 
     public MainHeader(WebDriver driver) {
 
@@ -38,4 +40,16 @@ public class MainHeader extends BasePage{
         driver.findElement(linkToScooterHomePage).click();
         return new HomePage(driver);
     }
+
+    public HomePage buttonCookieClick() {
+        return (HomePage) this;
+    }
+
+    public NewRentClientInfoPage buttonRentHeaderClick() {
+        WebTestUtils.scrollTo(driver, buttonRentHeader);
+        driver.findElement(buttonRentHeader).click();
+        return new NewRentClientInfoPage(driver);
+    }
 }
+
+
